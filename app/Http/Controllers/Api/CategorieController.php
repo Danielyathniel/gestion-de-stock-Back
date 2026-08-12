@@ -49,6 +49,11 @@ class CategorieController extends Controller
 
     public function destroy(Categorie $categorie): JsonResponse
     {
+         if ($categorie->articles()->exists()) {
+        return response()->json([
+            'message' => 'Impossible de supprimer cette catégorie ',
+        ], 422);
+    }
         $categorie->delete();
 
         return response()->json(['message' => 'Catégorie supprimée avec succès']);

@@ -37,7 +37,7 @@ class ArticleController extends Controller
             'reference' => 'required|string|max:50|unique:articles,reference',
             'nom' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'categorie_id' => 'nullable|exists:categories,id',
+            'categorie_id' => 'required|exists:categories,id',
             'prix_achat' => 'required|numeric|min:0',
             'prix_vente' => 'required|numeric|min:0',
             'stock_actuel' => 'nullable|integer|min:0',
