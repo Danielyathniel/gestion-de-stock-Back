@@ -47,7 +47,7 @@ class ArticleController extends Controller
 
         $article = Article::create($validated);
 
-        return response()->json($article, 201);
+        return response()->json($article->load('categorie'), 201);
     }
 
     public function show(Article $article): JsonResponse
@@ -70,7 +70,7 @@ class ArticleController extends Controller
 
         $article->update($validated);
 
-        return response()->json($article);
+        return response()->json($article->load('categorie'));
     }
 
     public function destroy(Article $article): JsonResponse

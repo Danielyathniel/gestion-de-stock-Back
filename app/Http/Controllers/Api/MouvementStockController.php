@@ -8,7 +8,6 @@ use App\Models\MouvementStock;
 use App\Models\TypeMouvement;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 class MouvementStockController extends Controller
 {
@@ -53,20 +52,10 @@ class MouvementStockController extends Controller
             ], 422);
         }
 
-        $mouvement = DB::transaction(function () use ($validated, $article, $estUneSortie) {
-            $mouvement = MouvementStock::create([
-                ...$validated,
-                'user_id' => auth()->id(),
-            ]);
-
-            if ($estUneSortie) {
-                $article->decrement('stock_actuel', $validated['quantite']);
-            } else {
-                $article->increment('stock_actuel', $validated['quantite']);
-            }
-
-            return $mouvement;
-        });
+        $mouvement = MouvementStock::create([
+            ...$validated,
+            'user_id' => auth()->id(),
+        ]);
 
         return response()->json($mouvement->load(['article', 'typeMouvement']), 201);
     }
