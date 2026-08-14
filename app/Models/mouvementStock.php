@@ -17,7 +17,8 @@ class MouvementStock extends Model
         'quantite',
         'date_mouvement',
         'motif',
-        'observation'
+        'observation',
+        'stock_apres_mouvement'
     ];
 
     public function article()
