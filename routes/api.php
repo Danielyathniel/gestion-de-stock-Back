@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\MouvementStockController;
 use App\Http\Controllers\Api\TypeMouvementController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\DashboardController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -18,6 +19,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('categories', CategorieController::class)
     ->parameters(['categories' => 'categorie']);
     Route::apiResource('articles', ArticleController::class);
+    Route::get('/dashboard', [DashboardController::class, 'stats']);
 
     Route::get('/mouvements', [MouvementStockController::class, 'index']);
     Route::post('/mouvements', [MouvementStockController::class, 'store']);

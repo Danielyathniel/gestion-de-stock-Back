@@ -8,9 +8,15 @@ return new class extends Migration
 {
     public function up(): void
     {
+        Schema::table('articles', function (Blueprint $table) {
+            $table->dropForeign(['categorie_id']);
+        });
 
         Schema::table('articles', function (Blueprint $table) {
             $table->foreignId('categorie_id')->nullable(false)->change();
+        });
+
+        Schema::table('articles', function (Blueprint $table) {
             $table->foreign('categorie_id')
                   ->references('id')->on('categories')
                   ->onDelete('restrict');
