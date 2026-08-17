@@ -23,7 +23,7 @@ class CategorieController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'nom' => 'required|string|max:150|unique:categories,nom|regex:/^(?=.*\pL)[\pL\d\s\'-]+$/u',
+            'nom' => 'required|string|min:3|max:150|unique:categories,nom|regex:/^(?=.*\pL)[\pL\d\s\'-]+$/u',
         ]);
 
         $categorie = Categorie::create($validated);
@@ -39,7 +39,7 @@ class CategorieController extends Controller
     public function update(Request $request, Categorie $categorie): JsonResponse
     {
         $validated = $request->validate([
-            'nom' => 'required|string|max:150|unique:categories,nom,' . $categorie->id,
+            'nom' => 'required|string|min:3|max:150|unique:categories,nom,' . $categorie->id,
         ]);
 
         $categorie->update($validated);
