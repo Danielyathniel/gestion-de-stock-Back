@@ -16,8 +16,8 @@ class DashboardController extends Controller
         $totalArticles = Article::count();
         $totalCategories = Categorie::count();
 
-        $totalEntrees = (int) MouvementStock::whereHas('typeMouvement', fn ($q) => $q->where('code', 'IN'))->sum('quantite');
-        $totalSorties = (int) MouvementStock::whereHas('typeMouvement', fn ($q) => $q->where('code', 'OUT'))->sum('quantite');
+        $totalEntrees = MouvementStock::whereHas('typeMouvement', fn ($q) => $q->where('code', 'IN'))->count();
+        $totalSorties = MouvementStock::whereHas('typeMouvement', fn ($q) => $q->where('code', 'OUT'))->count();
 
         $valeurStock = (float) Article::sum(DB::raw('stock_actuel * prix_achat'));
 
