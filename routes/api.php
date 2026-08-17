@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategorieController;
 use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\ArticleExportController;
 use App\Http\Controllers\Api\MouvementStockController;
 use App\Http\Controllers\Api\TypeMouvementController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('categories', CategorieController::class)
     ->parameters(['categories' => 'categorie']);
     Route::get('/articles/next-reference', [ArticleController::class, 'nextReference']);
+    Route::get('/articles/export/pdf', [ArticleExportController::class, 'pdf']);
     Route::apiResource('articles', ArticleController::class);
     Route::get('/dashboard', [DashboardController::class, 'stats']);
 
