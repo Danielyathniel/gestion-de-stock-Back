@@ -23,7 +23,7 @@ class CategorieController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'nom' => 'required|string|max:150|unique:categories,nom',
+            'nom' => 'required|string|max:150|unique:categories,nom|regex:/^(?=.*\pL)[\pL\d\s\'-]+$/u',
         ]);
 
         $categorie = Categorie::create($validated);
@@ -51,7 +51,7 @@ class CategorieController extends Controller
     {
          if ($categorie->articles()->exists()) {
         return response()->json([
-            'message' => 'Impossible de supprimer cette catégorie ',
+            'message' => 'Impossible de supprimer cette catégorie. Des articles sont associés à cette catégorie.',
         ], 422);
     }
         $categorie->delete();
@@ -59,3 +59,5 @@ class CategorieController extends Controller
         return response()->json(['message' => 'Catégorie supprimée avec succès']);
     }
 }
+
+    

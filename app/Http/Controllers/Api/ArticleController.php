@@ -34,7 +34,6 @@ class ArticleController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'reference' => 'required|string|max:50|unique:articles,reference',
             'nom' => 'required|string|max:255',
             'description' => 'nullable|string',
             'categorie_id' => 'required|exists:categories,id',
@@ -45,9 +44,27 @@ class ArticleController extends Controller
             'unite' => 'required|string|max:50',
         ]);
 
+        $validated['reference'] = $this->generateNextReference();
+
         $article = Article::create($validated);
 
         return response()->json($article->load('categorie'), 201);
+    }
+
+    
+    private function generateNextReference(): string
+    {
+        $lastNumber = Article::where('reference', 'like', 'ART-%')
+            ->get()
+            ->map(fn ($a) => (int) str_replace('ART-', '', $a->reference))
+            ->max() ?? 0;
+
+        return 'ART-' . str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+    }
+
+    public function nextReference(): JsonResponse
+    {
+        return response()->json(['reference' => $this->generateNextReference()]);
     }
 
     public function show(Article $article): JsonResponse
@@ -58,7 +75,6 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article): JsonResponse
     {
         $validated = $request->validate([
-            'reference' => 'required|string|max:50|unique:articles,reference,' . $article->id,
             'nom' => 'required|string|max:255',
             'description' => 'nullable|string',
             'categorie_id' => 'nullable|exists:categories,id',

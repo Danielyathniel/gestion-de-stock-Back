@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::apiResource('categories', CategorieController::class)
     ->parameters(['categories' => 'categorie']);
+    Route::get('/articles/next-reference', [ArticleController::class, 'nextReference']);
     Route::apiResource('articles', ArticleController::class);
     Route::get('/dashboard', [DashboardController::class, 'stats']);
 
