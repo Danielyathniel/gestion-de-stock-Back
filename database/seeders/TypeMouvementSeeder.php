@@ -14,10 +14,7 @@ class TypeMouvementSeeder extends Seeder
     public function run(): void
     {
         $now = now();
-        TypeMouvement::insert([
-            ['id' => 1, 'libelle' => 'Entrée', 'code' => 'IN', 'created_at' => $now, 'updated_at' => $now],
-            ['id' => 2, 'libelle' => 'Sortie', 'code' => 'OUT', 'created_at' => $now, 'updated_at' => $now],
-        ]);
-        
+        TypeMouvement::firstOrCreate(['code' => 'IN'], ['id' => 1, 'libelle' => 'Entrée', 'created_at' => $now, 'updated_at' => $now]);
+        TypeMouvement::firstOrCreate(['code' => 'OUT'], ['id' => 2, 'libelle' => 'Sortie', 'created_at' => $now, 'updated_at' => $now]);
     }
 }
