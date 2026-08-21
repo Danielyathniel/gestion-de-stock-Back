@@ -16,6 +16,10 @@ echo "Running migrations..."
 php artisan migrate --force
 echo "Migrations done"
 
+echo "Seeding database..."
+php artisan db:seed --force
+echo "Seed done"
+
 echo "Generating nginx config..."
 envsubst '$PORT' < /etc/nginx/templates/nginx.conf.template > /etc/nginx/sites-available/default
 
