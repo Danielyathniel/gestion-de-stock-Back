@@ -1,4 +1,4 @@
-﻿FROM php:8.2-fpm
+FROM php:8.2-fpm
 
 # Installer les dependances systeme
 RUN apt-get update && apt-get install -y \
@@ -22,6 +22,6 @@ COPY docker/nginx.conf /etc/nginx/sites-available/default
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
 
-EXPOSE 80
+EXPOSE 10000
 
 CMD ["/start.sh"]
